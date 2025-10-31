@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estudos React.js - Fundamentos</title>
+</head>
+<body>
+  <div id="root"></div> <!-- Responsável por renderizar a aplicação em React -->
+
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script> <!-- Responsável por importar o React no projeto. OBS: importante estar tanto o DOM quanto o react na mesma versão. -->
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+
+  <script type="text/babel">
+    const buttonVariants = {
+      default: 'bg-gray-500',
+      primary: 'bg-purple-500',
+    }
+    function Button ({variant = 'primary', children, className, ...props}){{/*Na props do componente, definimos uma variante que servirá como modelo para definir o estilo do botão. Essa variante interage principalmente com a constante "buttonVariants", que a depender do argumento recebido, ele recebe a estilização pela constante definida. Posteriormente (por se tratar de uma string), atribuimos a estilização no class name do componente, por meio de template string */} 
+    {/*Com o parametro classname foi a mesma coisa. Definimos ele como sendo um parametro a ser recebido, e que o argumento por ele passado seria atribuido a propiedade className do componente "pai", dessa forma mesclando a edição passada na hora que o componente é chamado */}  
+      
+    
+      {/*qualauquer valor dinamico que você queira renderizar, precisa estar entre chaves*/}
+      return (
+        <button className={`${buttonVariants[variant]} p-3 text-white ${className}`} {...props} >{/*Props serve para manipular qualquer propiedade que não definimos no parâmetro, atribuindo ela a um elemento automaticamente, neste caso, pegamos uma props atribuida no App>Button, sendo title, e mesmo não tendo definido ela como um parametro para o elemento de Button anteriormente, o props se encarrega de tratar essa caracteristica*/}
+          {children}
+        </button>
+        )
+    }
+
+    function App() {
+      return (
+        <main className="p-3 flex gap-2">
+          <Button title="Meu botão" type="button">
+            Botão 1
+          </Button>
+          <Button variant = 'primary' className='p-10'>
+            Botão
+          </Button>
+          <Button variant = 'default'>
+            Botão
+          </Button>
+          </main>
+         )
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(
+      <App />
+    )
+  </script>
+</body>
+</html>
