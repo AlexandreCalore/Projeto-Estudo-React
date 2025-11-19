@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Rubik:ital,wght@0,300..900;1,300..900&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+  <title>Estudos React.js - Fundamentos</title>
+</head>
+<body className = 'text-(--text) font-(--font-sans)'>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+
+  <script type="text/babel">
+    
+    //Devido a estilização ter algumas variações de texto, vamos lidar com elas da seguinte maneira:
+    const textVariants = {
+      default: 'text-xl',
+      muted: 'text-xl text-(--text-secondary)', //Busca no tema a estilização como arbitrário
+      heading: 'text-2xl',
+      blast: 'text-3xl' 
+    }
+
+    function Text({
+      as = 'span',
+      variant = 'default', //Definido como default, pois no textVariants temos varios tipos de variações, por padrão será a 'default' mesmo.
+      className, //Para caso houver uma estilização específica
+      children, 
+      ...props
+    }){ //criando componente de texto, que no caso, definimos que por padrão todo o texto ali dentro vai ser considerado um span se não especificarmos, feito declarando as = 'span'
+      return  React.createElement(
+        as, // passamos o nome da tag que ele vai criar (no caso, se não receber nada, por padrão será 'span')
+        {
+          className: `${textVariants[variant]} ${className ? className : ''}`,
+          ...props
+        },
+        children //
+      )
+    }
+
+    const buttonVariants = {
+      default: 'bg-(--background)',
+      primary: 'bg-(--primary)'
+    }
+
+    function Button({
+      variant = 'default',
+      className,
+      children,
+      ...props
+    }){
+      return(
+        <Text 
+          as="button" 
+          variant="heading"
+          className = {`
+            flex items-center justify-center rounded-xl p-3 cursor-pointer text-(--text) bg-linear(--gradient) hover:bg-linear-(--gradient-hover) shadow-(--shadow)
+          ${buttonVariants[variant]}
+          ${className ? className : ''}
+          `}
+          {...props}
+        >
+          {children}
+        </Text>
+        )
+    
+    }
+
+    function App(){
+      return(
+      <main className="py-28 px-4">
+        <Text variant="default"> Olá Mundo </Text> <br/> {/*Testando variantes de texto dentro do componente App */}
+        <Text variant="muted">   Olá Mundo </Text> <br/>
+        <Text variant="heading"> Olá Mundo </Text> <br/>
+        <Text variant="blast">   Olá Mundo </Text> 
+        <Button variant="primary">CE</Button>
+        <Button>CE</Button>
+      </main>
+      )
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App/>)
+  </script>
+
+</body>
+</html>
